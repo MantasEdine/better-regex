@@ -6,9 +6,19 @@ function matchNode(node, input, pos) {
         if (input[pos] === node.value) return pos + 1
         return -1
     }
+
     if (node.type === "dot") {
         if (pos < input.length) return pos + 1
         return -1
+    }
+
+    if (node.type === "star") {
+      while (true) {
+         let next = matchNode(node.child, input, pos)
+         if (next === -1) break     
+         pos = next                  
+       }
+        return pos                  
     }
     if (node.type === "concat") {
         for (let child of node.children) {

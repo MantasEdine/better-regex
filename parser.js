@@ -24,8 +24,12 @@ function Parser(exp){
         } else if (exp[i] === ".") {
             charArr.push({type:"dot"})
             i++                         
-        } else {
-            return "not yet!"
+        } else if (exp[i] === "*") {
+            const prev = charArr.pop()  
+            charArr.push({type:"star", child: prev})
+            i++
+        }else {
+             return "not yet !!"
         }
     }                               
     return {type:"concat", children: charArr}   
