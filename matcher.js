@@ -1,36 +1,49 @@
 "use strict"
 const { Parser } = require('./parser.js')
 
-function matchNode(node, input, pos) {
+function matchSeq(nodes, index, input, pos) {
+    if (index >= nodes.length) return pos
+
+    const node = nodes[index]
+
     if (node.type === "char") {
-        if (input[pos] === node.value) return pos + 1
+        if (input[pos] === node.value) return matchSeq(nodes, index + 1, input, pos + 1)
         return -1
     }
 
     if (node.type === "dot") {
-        if (pos < input.length) return pos + 1
+        if (pos < input.length) return matchSeq(nodes, index + 1, input, pos + 1)
         return -1
     }
 
     if (node.type === "star") {
-      while (true) {
-         let next = matchNode(node.child, input, pos)
-         if (next === -1) break     
-         pos = next                  
-       }
-        return pos                  
-    }
-    if (node.type === "concat") {
-        for (let child of node.children) {
-            pos = matchNode(child, input, pos)   
-            if (pos === -1) return -1
+        let stops = [pos]
+        let p = pos
+        while (true) {
+            let next = matchNode(node.child, input, p)
+            if (next === -1 || next === p) break
+            p = next
+            stops.push(p)
         }
-        return pos
+        for (let k = stops.length - 1; k >= 0; k--) {
+            let result = matchSeq(nodes, index + 1, input, stops[k])
+            if (result !== -1) return result
+        }
+        return -1
     }
+
+    return -1
 }
+
+function matchNode(node, input, pos) {
+    if (node.type === "char") return input[pos] === node.value ? pos + 1 : -1
+    if (node.type === "dot")  return pos < input.length ? pos + 1 : -1
+    return -1
+}
+
 function match(pattern, input) {
     const tree = Parser(pattern)
-    const end = matchNode(tree, input, 0)
+    const end = matchSeq(tree.children, 0, input, 0)
     return end === input.length
 }
 
