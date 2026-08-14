@@ -31,6 +31,36 @@ function matchSeq(nodes, index, input, pos) {
         }
         return -1
     }
+    
+    if(node.type === "plus"){
+
+        let stops = [pos]
+        let p = pos
+        while (true) {
+            let next = matchNode(node.child, input, p)
+            if (next === -1 || next === p) break
+            p = next
+            stops.push(p)
+        }
+        if(stops.length === 1) return -1
+        for (let k = stops.length - 1; k >= 0; k--) {
+            let result = matchSeq(nodes, index + 1, input, stops[k])
+            if (result !== -1) return result
+        }
+        return -1
+       
+    }
+
+    if(node.type === "optional"){
+        let stops = [pos]                                // option 1: skip the child (zero)
+        let next = matchNode(node.child, input, pos)     // try matching ONCE
+        if(next !== -1 && next !== pos) stops.push(next)  // option 2: took it (one)
+        for(let k = stops.length - 1; k >= 0; k--){
+            let result = matchSeq(nodes, index + 1, input, stops[k])
+            if(result !== -1) return result
+        }   
+        return -1
+    }   
 
     return -1
 }

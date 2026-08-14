@@ -27,9 +27,19 @@ function Parser(exp){
             const prev = charArr.pop()
             charArr.push({type:"star", child: prev})
             i++
-        } else {
-            return "not yet !!"
+        }else if(exp[i] === "+"){
+            let prev = charArr.pop()
+            charArr.push({type : "plus" , child : prev})
+            i++
+        }else if(exp[i] === "?"){
+            let prev = charArr.pop()
+            charArr.push({type : "optional" , child : prev})
+            i++
+
+        }else {
+            return "not yet !"
         }
+
     }
     return {type:"concat", children: charArr}
    }
