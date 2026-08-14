@@ -13,9 +13,10 @@ function Parser(exp){
                 (code >= 0x30 && code <= 0x39)
    }
 
-  function basicConcat(exp) {
+  function basicConcat(exp , index) {
     let charArr = []
-    let i = 0
+    let i = index || 0    
+
     while (i < exp.length) {
         if (isLetter(exp[i])) {
             charArr.push({type:"char", value: exp[i]})
@@ -35,7 +36,10 @@ function Parser(exp){
             let prev = charArr.pop()
             charArr.push({type : "optional" , child : prev})
             i++
-
+        } else if (exp[i] === "|") {
+            const left = {type:"concat", children: charArr}   // what we built so far = left
+            const right = basicConcat(exp, i + 1)              // parse rest = right
+            return {type:"or", left: left, right: right}       // return or, STOP
         }else {
             return "not yet !"
         }
