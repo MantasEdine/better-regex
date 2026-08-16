@@ -72,3 +72,5 @@ function Parser(exp) {
 
   return parseOr();
 }
+
+module.exports = { Parser };
