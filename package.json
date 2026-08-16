@@ -1,15 +1,31 @@
 {
   "name": "@rabia_youcef/better-regex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A regex engine built from scratch — parser + backtracking matcher, no native RegExp. Supports literals, ., *, +, ?, and | alternation.",
-  "keywords": ["regex", "regular-expression", "parser", "backtracking", "from-scratch", "zero-dependency"],
+  "keywords": [
+    "regex",
+    "regular-expression",
+    "parser",
+    "backtracking",
+    "from-scratch",
+    "zero-dependency"
+  ],
   "homepage": "https://github.com/MantasEdine/better-regex#readme",
-  "bugs": { "url": "https://github.com/MantasEdine/better-regex/issues" },
-  "repository": { "type": "git", "url": "git+https://github.com/MantasEdine/better-regex.git" },
+  "bugs": {
+    "url": "https://github.com/MantasEdine/better-regex/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MantasEdine/better-regex.git"
+  },
   "license": "MIT",
   "author": "Rabia Youcef",
   "type": "commonjs",
   "main": "index.js",
-  "publishConfig": { "access": "public" },
-  "scripts": { "test": "node test.js" }
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "node test.js"
+  }
 }
