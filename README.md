@@ -1,8 +1,7 @@
 # better-regex
 
 A regex engine built from scratch in vanilla JavaScript — a hand-written parser
-and a backtracking matcher. No native `RegExp`, no dependencies. Built as a
-learning project to understand how regex engines actually work under the hood.
+and a backtracking matcher. No native `RegExp`, no dependencies.
 
 ## Install
 
